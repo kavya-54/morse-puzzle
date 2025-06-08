@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dynamic Morse Puzzle</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9ff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .morse-display {
+      font-size: 2rem;
+      margin: 20px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    input {
+      padding: 10px;
+      font-size: 1rem;
+      border: 2px solid #888;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      margin: 5px;
+      border: none;
+      border-radius: 8px;
+      background: #5c6bc0;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #3f51b5;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .hint-box {
+      display: none;
+      background: #ffffe0;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px dashed #aaa;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Decode the Morse Code</h1>
+
+  <div class="morse-display" id="morseCode"></div>
+
+  <input type="text" id="answer" placeholder="Decoded word" />
+
+  <button onclick="checkAnswer()">Submit</button>
+  <button onclick="toggleHint()">Hint</button>
+
+  <div id="result" class="result"></div>
+
+  <div id="hint" class="hint-box">
+    <strong>Morse Code Chart:</strong><br>
+    A: .- &nbsp; B: -... &nbsp; C: -.-. <br>
+    D: -.. &nbsp; E: . &nbsp; F: ..-.<br>
+    G: --. &nbsp; H: .... &nbsp; I: ..<br>
+    J: .--- &nbsp; K: -.- &nbsp; L: .-..<br>
+    M: -- &nbsp; N: -. &nbsp; O: ---<br>
+    P: .--. &nbsp; Q: --.- &nbsp; R: .-.<br>
+    S: ... &nbsp; T: - &nbsp; U: ..-<br>
+    V: ...- &nbsp; W: .-- &nbsp; X: -..-<br>
+    Y: -.-- &nbsp; Z: --..
+  </div>
+
+  <script>
+    const morseCodeMap = {
+      A: ".-", B: "-...", C: "-.-.", D: "-..", E: ".", F: "..-.",
+      G: "--.", H: "....", I: "..", J: ".---", K: "-.-", L: ".-..",
+      M: "--", N: "-.", O: "---", P: ".--.", Q: "--.-", R: ".-.",
+      S: "...", T: "-", U: "..-", V: "...-", W: ".--", X: "-..-",
+      Y: "-.--", Z: "--.."
+    };
+
+    const wordList = ["COFFEE", "BREAK", "EMAIL", "LUNCH", "MEETING", "PRINTER", "STAPLE", "OFFICE", "CHAIR", "REPORT"];
+    let chosenWord = "";
+
+    function getRandomWord() {
+      const randomIndex = Math.floor(Math.random() * wordList.length);
+      return wordList[randomIndex];
+    }
+
+    function toMorse(word) {
+      return word.toUpperCase().split('').map(letter => morseCodeMap[letter] || '').join(' ');
+    }
+
+    function generatePuzzle() {
+      chosenWord = getRandomWord();
+      const morse = toMorse(chosenWord);
+      document.getElementById("morseCode").textContent = morse;
+    }
+
+    function checkAnswer() {
+      const input = document.getElementById("answer").value.trim().toUpperCase();
+      const result = document.getElementById("result");
+
+      if (input === chosenWord) {
+        result.style.color = "green";
+        result.textContent = "✅ Correct! Next challenge awaits.";
+        // window.location.href = "next.html"; // Optional redirect
+      } else {
+        result.style.color = "red";
+        result.textContent = "❌ Nope, try again!";
+      }
+    }
+
+    function toggleHint() {
+      const hint = document.getElementById("hint");
+      hint.style.display = hint.style.display === 'block' ? 'none' : 'block';
+    }
+
+    window.onload = generatePuzzle;
+  </script>
+</body>
+</html>
+
+
+   
+
+
+  
+   
+
