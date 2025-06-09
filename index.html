@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Escape Puzzle – Decode the Office Secret</title>
+  <title>Escape Puzzle – Bureaucratic Loop</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -79,15 +79,14 @@
 </head>
 <body>
 
-  <h1>🔐 Office Escape Puzzle: Decode the Secret</h1>
+  <h1>🧾 Decode the Admin Keyword</h1>
 
-  <div class="story" id="dynamicStory">
-    <!-- Dynamic story will appear here -->
+  <div class="story">
+    <p><strong>From:</strong> Admin Support Bot 3000</p>
+    <p><em>“Your request for coffee mugs has been rejected due to form 19-B being unsigned. Please confirm your understanding by decoding the keyword attached in Morse code. Failure to comply will result in additional meetings.”</em></p>
   </div>
 
-  <div class="morse" id="morseCodeBox">
-    <!-- Morse code will appear here -->
-  </div>
+  <div class="morse">-... ..- .-. . .- ..- -.-. .-. .- - .. -.-.</div>
 
   <input id="answer" placeholder="Type decoded word here..." />
 
@@ -96,9 +95,9 @@
     <button onclick="toggleHint()">Show Hint</button>
   </div>
 
-  <div class="result" id="resultMsg"></div>
+  <div id="result" class="result"></div>
 
-  <div class="hint-box" id="hintBox">
+  <div id="hint" class="hint-box">
     <strong>Morse Chart:</strong><br>
     A: .- &nbsp; B: -... &nbsp; C: -.-. &nbsp; D: -..<br>
     E: . &nbsp; F: ..-. &nbsp; G: --. &nbsp; H: ....<br>
@@ -110,78 +109,25 @@
   </div>
 
   <script>
-    const morseMap = {
-      A: ".-", B: "-...", C: "-.-.", D: "-..", E: ".", F: "..-.",
-      G: "--.", H: "....", I: "..", J: ".---", K: "-.-", L: ".-..",
-      M: "--", N: "-.", O: "---", P: ".--.", Q: "--.-", R: ".-.",
-      S: "...", T: "-", U: "..-", V: "...-", W: ".--", X: "-..-",
-      Y: "-.--", Z: "--.."
-    };
-
-    const wordBank = [
-      "BUREAUCRATIC", "DOCUMENTATION", "COLLABORATION", "WORKSTATION",
-      "DELIVERABLES", "PERFORMANCE", "MULTITASKING"
-    ];
-
-    const stories = {
-      BUREAUCRATIC: `🧾 <strong>From:</strong> Admin Desk<br>
-        <em>“Your ergonomic chair requisition has been declined due to Form 91B-Alpha being unsigned in triplicate. 
-        Please confirm your understanding by decoding the attached keyword.”</em>`,
-
-      DOCUMENTATION: `📄 <strong>Memo:</strong> DevOps Lead<br>
-        <em>“Due to a server rollback, your team’s deployment documentation has been lost. 
-        Retrieve the backup key phrase to access archived files.”</em>`,
-
-      COLLABORATION: `🗣️ <strong>Slackbot Notification:</strong><br>
-        <em>“You’ve been added to Project Octopus without prior consent. 
-        Collaboration key needed to regain workspace control.”</em>`,
-
-      WORKSTATION: `💻 <strong>From:</strong> IT Security<br>
-        <em>“Suspicious login detected on your workstation. To verify identity, decode the lockphrase now.”</em>`,
-
-      DELIVERABLES: `📦 <strong>Project Coordinator:</strong><br>
-        <em>“Milestone 3 deliverables are hidden inside encrypted folders. Recover the internal label keyword to submit on time.”</em>`,
-
-      PERFORMANCE: `📊 <strong>HR Alert:</strong><br>
-        <em>“Your annual performance report shows discrepancies. Please decrypt the assessment tag to proceed with review.”</em>`,
-
-      MULTITASKING: `🌀 <strong>System Notice:</strong><br>
-        <em>“You opened 27 tabs simultaneously. RAM usage critical. Restore balance by unlocking the multitasking limiter code.”</em>`
-    };
-
-    const keyword = wordBank[Math.floor(Math.random() * wordBank.length)];
-
-    function wordToMorse(word) {
-      return word.toUpperCase().split('').map(letter => morseMap[letter] || '').join(' ');
-    }
-
-    function loadPuzzle() {
-      document.getElementById("morseCodeBox").textContent = wordToMorse(keyword);
-      document.getElementById("dynamicStory").innerHTML = stories[keyword] || "<em>Decode the hidden keyword to escape the loop.</em>";
-    }
-
     function checkAnswer() {
-      const userInput = document.getElementById("answer").value.trim().toUpperCase();
-      const resultBox = document.getElementById("resultMsg");
+      const userInput = document.getElementById('answer').value.trim().toUpperCase();
+      const resultBox = document.getElementById('result');
 
-      if (userInput === keyword) {
+      if (userInput === "BUREAUCRATIC") {
         resultBox.style.color = "green";
-        resultBox.textContent = "✅ Correct! Redirecting to the next challenge...";
-        setTimeout(() => {
-          window.location.href = "puzzle2.html";
-        }, 2000);
+        resultBox.innerText = "✅ Access Granted! Proceed to next request form.";
+        // Redirect logic or game progression here
+        // window.location.href = "puzzle2.html";
       } else {
         resultBox.style.color = "red";
-        resultBox.textContent = "❌ Incorrect. Try again!";
+        resultBox.innerText = "❌ Incorrect. Decode again or face bureaucracy!";
       }
     }
 
     function toggleHint() {
-      const hint = document.getElementById("hintBox");
+      const hint = document.getElementById('hint');
       hint.style.display = hint.style.display === 'block' ? 'none' : 'block';
     }
-
-    loadPuzzle();
   </script>
 
 </body>
