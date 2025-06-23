@@ -1,1 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Escape Puzzle – Decode the Office Secret</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff8f0;
+      padding: 30px;
+      max-width: 800px;
+      margin: auto;
+      color: #333;
+    }
 
+    h1 {
+      color: #2c3e50;
+    }
+
+    .story {
+      background: #f9f1e7;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      border-left: 5px solid #e67e22;
+    }
+
+    .morse {
+      font-size: 1.6rem;
+      background: #e8f8ff;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 20px;
+      letter-spacing: 5px;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 1rem;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      background: #2980b9;
+      color: white;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1c5980;
+    }
+
+    .result {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-top: 10px;
+    }
+
+    .hint-box {
+      display: none;
+      background: #ffffe0;
+      padding: 12px;
+      margin-top: 10px;
+      border-left: 4px dashed #999;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🔐 Decode the Secret</h1>
+
+  <div class="story" id="dynamicStory">
+    <!-- Dynamic story will appear here -->
+  </div>
+
+  <div class="morse" id="morseCodeBox">
+    <!-- Morse code will appear here -->
+  </div>
+
+  <input id="answer" placeholder="Type decoded word here..." />
+
+  <div>
+    <button onclick="checkAnswer()">Submit</button>
+    <button onclick="toggleHint()">Show Hint</button>
+  </div>
+
+  <div class="result" id="resultMsg"></div>
+
+  <div class="hint-box" id="hintBox">
+    <strong>Morse Chart:</strong><br>
+    A: .- &nbsp; B: -... &nbsp; C: -.-. &nbsp; D: -..<br>
+    E: . &nbsp; F: ..-. &nbsp; G: --. &nbsp; H: ....<br>
+    I: .. &nbsp; J: .--- &nbsp; K: -.- &nbsp; L: .-..<br>
+    M: -- &nbsp; N: -. &nbsp; O: --- &nbsp; P: .--.<br>
+    Q: --.- &nbsp; R: .-. &nbsp; S: ... &nbsp; T: -<br>
+    U: ..- &nbsp; V: ...- &nbsp; W: .-- &nbsp; X: -..-<br>
+    Y: -.-- &nbsp; Z: --..
+  </div>
+
+  <script>
+    const morseMap = {
+      A: ".-", B: "-...", C: "-.-.", D: "-..", E: ".", F: "..-.",
+      G: "--.", H: "....", I: "..", J: ".---", K: "-.-", L: ".-..",
+      M: "--", N: "-.", O: "---", P: ".--.", Q: "--.-", R: ".-.",
+      S: "...", T: "-", U: "..-", V: "...-", W: ".--", X: "-..-",
+      Y: "-.--", Z: "--.."
+    };
+
+    const wordBank = [
+      "BUREAUCRATIC", "DOCUMENTATION", "COLLABORATION", "WORKSTATION",
+      "DELIVERABLES", "PERFORMANCE", "MULTITASKING"
+    ];
+
+    const stories = {
+      BUREAUCRATIC: `🧾 <strong>From:</strong> Admin Desk<br>
+        <em>“Your ergonomic chair requisition has been declined due to Form 91B-Alpha being unsigned in triplicate. 
+        Please confirm your understanding by decoding the attached keyword.”</em>`,
+
+      DOCUMENTATION: `📄 <strong>Memo:</strong> DevOps Lead<br>
+        <em>“Due to a server rollback, your team’s deployment documentation has been lost. 
+        Retrieve the backup key phrase to access archived files.”</em>`,
+
+      COLLABORATION: `🗣️ <strong>Slackbot Notification:</strong><br>
+        <em>“You’ve been added to Project Octopus without prior consent. 
+        Collaboration key needed to regain workspace control.”</em>`,
+
+      WORKSTATION: `💻 <strong>From:</strong> IT Security<br>
+        <em>“Suspicious login detected on your workstation. To verify identity, decode the lockphrase now.”</em>`,
+
+      DELIVERABLES: `📦 <strong>Project Coordinator:</strong><br>
+        <em>“Milestone 3 deliverables are hidden inside encrypted folders. Recover the internal label keyword to submit on time.”</em>`,
+
+      PERFORMANCE: `📊 <strong>HR Alert:</strong><br>
+        <em>“Your annual performance report shows discrepancies. Please decrypt the assessment tag to proceed with review.”</em>`,
+
+      MULTITASKING: `🌀 <strong>System Notice:</strong><br>
+        <em>“You opened 27 tabs simultaneously. RAM usage critical. Restore balance by unlocking the multitasking limiter code.”</em>`
+    };
+
+    const keyword = wordBank[Math.floor(Math.random() * wordBank.length)];
+
+    function wordToMorse(word) {
+      return word.toUpperCase().split('').map(letter => morseMap[letter] || '').join(' ');
+    }
+
+    function loadPuzzle() {
+      document.getElementById("morseCodeBox").textContent = wordToMorse(keyword);
+      document.getElementById("dynamicStory").innerHTML = stories[keyword] || "<em>Decode the hidden keyword to escape the loop.</em>";
+    }
+
+    function checkAnswer() {
+      const userInput = document.getElementById("answer").value.trim().toUpperCase();
+      const resultBox = document.getElementById("resultMsg");
+
+      if (userInput === keyword) {
+        resultBox.style.color = "green";
+        resultBox.textContent = "✅ Correct! Redirecting to the next challenge...";
+        setTimeout(() => {
+          window.location.href = "puzzle2.html";
+        }, 2000);
+      } else {
+        resultBox.style.color = "red";
+        resultBox.textContent = "❌ Incorrect. Try again!";
+      }
+    }
+
+    function toggleHint() {
+      const hint = document.getElementById("hintBox");
+      hint.style.display = hint.style.display === 'block' ? 'none' : 'block';
+    }
+
+    loadPuzzle();
+  </script>
+
+</body>
+</html>
