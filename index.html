@@ -73,8 +73,9 @@
       padding: 12px;
       margin-top: 10px;
       border-left: 4px dashed #999;
-      font-size: 0.85rem;
-      line-height: 1.6;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      letter-spacing: 0.5px;
     }
   </style>
 </head>
@@ -152,37 +153,38 @@
       TEAMPLAYER: `🏆 <strong>Recognition Bot:</strong><br><em>“You’ve been nominated. Decode team value keyword to claim badge.”</em>`
     };
 
-    const keywordHints = {
-      BUREAUCRATIC: "office red tape",
-      DOCUMENTATION: "developer guides or policy files",
-      COLLABORATION: "teamwork and communication",
-      WORKSTATION: "your desk environment",
-      DELIVERABLES: "expected project outputs",
-      PERFORMANCE: "employee evaluations",
-      MULTITASKING: "handling many things at once",
-      ONBOARDING: "starting a new job",
-      PROBATION: "initial evaluation period",
-      ESCALATION: "issue being moved up",
-      SYNERGY: "corporate buzzword for teamwork",
-      BRAINSTORM: "creative group session",
-      INBOXZERO: "clean email inbox",
-      MEETING: "corporate calendar filler",
-      KPI: "quantifiable performance goal",
-      AUTOMATION: "replacing manual work",
-      OPTIMIZATION: "making things efficient",
-      FEEDBACK: "reviews and suggestions",
-      TIMESHEET: "logging work hours",
-      COWORKING: "shared office space",
-      COMPLIANCE: "adhering to rules",
-      TEMPLATE: "pre-designed format",
-      PASSWORD: "access protection",
-      SIGNOFF: "final project approval",
-      PPTDECK: "presentation slides",
-      MOTIVATION: "drive to work",
-      RETROSPECT: "sprint review meeting",
-      INNOVATION: "new ideas",
-      DESKBOUND: "stuck at desk too long",
-      TEAMPLAYER: "collaborative person"
+    const keywordHints = 
+    {
+    BUREAUCRATIC: "📎 office red tape",
+    DOCUMENTATION: "📄 developer guides or policy files",
+    COLLABORATION: "🤝 teamwork and communication",
+    WORKSTATION: "💻 your desk environment",
+    DELIVERABLES: "📦 expected project outputs",
+    PERFORMANCE: "📊 employee evaluations",
+    MULTITASKING: "🌀 handling many things at once",
+    ONBOARDING: "👋 starting a new job",
+    PROBATION: "⏳ initial evaluation period",
+    ESCALATION: "🚨 issue being moved up",
+    SYNERGY: "🔗 corporate buzzword for teamwork",
+    BRAINSTORM: "⚡ creative group session",
+    INBOXZERO: "📥 clean email inbox",
+    MEETING: "📅 corporate calendar filler",
+    KPI: "🎯 quantifiable performance goal",
+    AUTOMATION: "🤖 replacing manual work",
+    OPTIMIZATION: "🔧 making things efficient",
+    FEEDBACK: "📝 reviews and suggestions",
+    TIMESHEET: "⏱️ logging work hours",
+    COWORKING: "🏢 shared office space",
+    COMPLIANCE: "🔒 adhering to rules",
+    TEMPLATE: "📑 pre-designed format",
+    PASSWORD: "🔐 access protection",
+    SIGNOFF: "✅ final project approval",
+    PPTDECK: "📽️ presentation slides",
+    MOTIVATION: "🌞 drive to work",
+    RETROSPECT: "🔄 sprint review meeting",
+    INNOVATION: "💡 new ideas",
+    DESKBOUND: "🪑 stuck at desk too long",
+    TEAMPLAYER: "🏆 collaborative person"
     };
 
     const keyword = wordBank[Math.floor(Math.random() * wordBank.length)];
@@ -216,13 +218,34 @@
       const hint = document.getElementById("hintBox");
       hint.innerHTML = `<strong>Hint:</strong> This word is related to <em>${keywordHints[keyword]}</em>.<br><br>
       <strong>Morse Chart:</strong><br>
-      A: .- &nbsp; B: -... &nbsp; C: -.-. &nbsp; D: -..<br>
-      E: . &nbsp; F: ..-. &nbsp; G: --. &nbsp; H: ....<br>
-      I: .. &nbsp; J: .--- &nbsp; K: -.- &nbsp; L: .-..<br>
-      M: -- &nbsp; N: -. &nbsp; O: --- &nbsp; P: .--.<br>
-      Q: --.- &nbsp; R: .-. &nbsp; S: ... &nbsp; T: -<br>
-      U: ..- &nbsp; V: ...- &nbsp; W: .-- &nbsp; X: -..-<br>
-      Y: -.-- &nbsp; Z: --..`;
+      <span style="font-size: 1.1rem; font-weight: bold; line-height: 1.8;">
+      <span style="color:#2c3e50;">A</span><span style="color:#e67e22;">:</span> .- &nbsp;
+      <span style="color:#2c3e50;">B</span><span style="color:#e67e22;">:</span> -... &nbsp;
+      <span style="color:#2c3e50;">C</span><span style="color:#e67e22;">:</span> -.-. &nbsp;
+      <span style="color:#2c3e50;">D</span><span style="color:#e67e22;">:</span> -..<br>
+      <span style="color:#2c3e50;">E</span><span style="color:#e67e22;">:</span> . &nbsp;
+      <span style="color:#2c3e50;">F</span><span style="color:#e67e22;">:</span> ..-. &nbsp;
+      <span style="color:#2c3e50;">G</span><span style="color:#e67e22;">:</span> --. &nbsp;
+      <span style="color:#2c3e50;">H</span><span style="color:#e67e22;">:</span> ....<br>
+      <span style="color:#2c3e50;">I</span><span style="color:#e67e22;">:</span> .. &nbsp;
+      <span style="color:#2c3e50;">J</span><span style="color:#e67e22;">:</span> .--- &nbsp;
+      <span style="color:#2c3e50;">K</span><span style="color:#e67e22;">:</span> -.- &nbsp;
+      <span style="color:#2c3e50;">L</span><span style="color:#e67e22;">:</span> .-..<br>
+      <span style="color:#2c3e50;">M</span><span style="color:#e67e22;">:</span> -- &nbsp;
+      <span style="color:#2c3e50;">N</span><span style="color:#e67e22;">:</span> -. &nbsp;
+      <span style="color:#2c3e50;">O</span><span style="color:#e67e22;">:</span> --- &nbsp;
+      <span style="color:#2c3e50;">P</span><span style="color:#e67e22;">:</span> .--.<br>
+      <span style="color:#2c3e50;">Q</span><span style="color:#e67e22;">:</span> --.- &nbsp;
+      <span style="color:#2c3e50;">R</span><span style="color:#e67e22;">:</span> .-. &nbsp;
+      <span style="color:#2c3e50;">S</span><span style="color:#e67e22;">:</span> ... &nbsp;
+      <span style="color:#2c3e50;">T</span><span style="color:#e67e22;">:</span> -<br>
+      <span style="color:#2c3e50;">U</span><span style="color:#e67e22;">:</span> ..- &nbsp;
+      <span style="color:#2c3e50;">V</span><span style="color:#e67e22;">:</span> ...- &nbsp;
+      <span style="color:#2c3e50;">W</span><span style="color:#e67e22;">:</span> .-- &nbsp;
+      <span style="color:#2c3e50;">X</span><span style="color:#e67e22;">:</span> -..-<br>
+      <span style="color:#2c3e50;">Y</span><span style="color:#e67e22;">:</span> -.-- &nbsp;
+      <span style="color:#2c3e50;">Z</span><span style="color:#e67e22;">:</span> --..
+      </span>`;
       hint.style.display = hint.style.display === 'block' ? 'none' : 'block';
     }
 
