@@ -88,9 +88,11 @@
   <h2>😂 Why did the developer go broke?</h2>
   <p>Because he used up all his cache! 💸</p>
   <label for="username" style="font-size: 20px;">🎩 Enter if you’ve got tricks up your sleeve!</label><br><br>
-  <input type="text" id="username" placeholder="You are?">
-  <br>
-  <button onclick="alert('Welcome, silly human!')">Log Me In 🚪</button>
+  <input type="text" id="username" placeholder="You are?" style="padding: 10px; border-radius: 10px; border: none; font-size: 16px;" />
+<br><br>
+<button onclick="startGame()" style="padding: 10px 20px; border: none; border-radius: 12px; background: #ff69b4; color: white; font-size: 18px; cursor: pointer;">
+  Log Me In 🚪
+</button>
 </div>
 
 <script>
@@ -153,6 +155,24 @@
     i++;
   }, 800);
 </script>
+
+<script>
+  function startGame() {
+    const username = document.getElementById("username").value.trim();
+    if (!username) {
+      alert("Please enter your name!");
+      return;
+    }
+
+    localStorage.setItem("username", username);
+    localStorage.setItem("startTime", Date.now().toString());
+    localStorage.removeItem("alreadyRecorded"); // Allow leaderboard to record again
+
+    // Redirect to your first puzzle page
+    window.location.href = "stage1.html"; // <-- change this if needed
+  }
+</script>
+
 
 </body>
 </html>
