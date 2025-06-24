@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>⏳ Lobby – Escape Room Queue</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #fce4ec, #e3f2fd);
+      font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 60px 20px;
+      color: #444;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #d81b60;
+      text-shadow: 1px 1px #fff;
+    }
+
+    .emoji {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .wait-box {
+      background: #ffffff;
+      border: 4px dashed #90caf9;
+      border-radius: 20px;
+      padding: 30px;
+      display: inline-block;
+      max-width: 600px;
+      box-shadow: 4px 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .wait-box p {
+      font-size: 1.2rem;
+      margin: 10px 0;
+    }
+
+    .quote {
+      font-style: italic;
+      color: #757575;
+      margin-top: 30px;
+    }
+
+    .refresh-tip {
+      margin-top: 20px;
+      font-size: 0.95rem;
+      color: #777;
+    }
+
+    .gif {
+      margin-top: 20px;
+      max-width: 200px;
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background: #43a047;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="emoji">🚪😅</div>
+  <h1>Oops! Too Many Escapees!</h1>
+
+  <div class="wait-box">
+    <p>Only 15 genius minds can enter the escape room at a time.</p>
+    <p>You're #16+ in the queue... Congrats, you're *extraordinary* 🤯</p>
+    <p>You're now chillin' in the lobby lounge with free WiFi and imaginary coffee ☕</p>
+
+    <div class="quote">“Patience is not the ability to wait, but how you act while waiting.” – Goofy Boss</div>
+
+    <div class="refresh-tip">🔄 Keep this tab open. We'll let you in when a spot is free!</div>
+
+    <img class="gif" src="https://media.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif" alt="Waiting gif" />
+
+    <br>
+    <button onclick="window.location.reload()">Try Again 🔁</button>
+  </div>
+
+</body>
+</html>
+
