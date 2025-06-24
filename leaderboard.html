@@ -1,1 +1,131 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🏆 Escape Game Leaderboard</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      color: #222;
+      font-size: 36px;
+    }
+
+    .cheer {
+      text-align: center;
+      font-size: 18px;
+      color: #ff6f61;
+      margin-bottom: 20px;
+      animation: pop 1.5s infinite alternate;
+    }
+
+    @keyframes pop {
+      from { transform: scale(1); }
+      to { transform: scale(1.05); }
+    }
+
+    table {
+      width: 90%;
+      margin: 0 auto;
+      border-collapse: collapse;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #e0ffe0;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🏁 Escape Room Leaderboard</h1>
+<div class="cheer">🎉 Congrats to our fastest escapers! May your coffee be strong & bugs be few ☕🐞</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>👤 Name</th>
+      <th>⏱️ Time Taken</th>
+      <th>🏁 Started At</th>
+      <th>✅ Finished At</th>
+    </tr>
+  </thead>
+  <tbody id="leaderboardBody">
+    <!-- Leaderboard entries will go here -->
+  </tbody>
+</table>
+
+<script>
+  // Simulate capturing end of game submission
+  if (!localStorage.getItem('alreadyRecorded')) {
+    const endTime = Date.now();
+    const startTime = parseInt(localStorage.getItem("startTime"));
+    const name = localStorage.getItem("username") || "Anonymous Player";
+
+    const timeTaken = endTime - startTime;
+
+    const leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+    leaderboard.push({ name, timeTaken, startTime, endTime });
+    localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+    localStorage.setItem("alreadyRecorded", "true");
+  }
+
+  // Leaderboard display logic
+  const leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+
+  function formatTime(durationMs) {
+    const seconds = Math.floor(durationMs / 1000);
+    const min = Math.floor(seconds / 60);
+    const sec = seconds % 60;
+    return `${min}m ${sec}s`;
+  }
+
+  function updateLeaderboardUI() {
+    const tbody = document.getElementById("leaderboardBody");
+    tbody.innerHTML = "";
+    leaderboard.sort((a, b) => a.timeTaken - b.timeTaken); // Fastest on top
+
+    leaderboard.forEach(entry => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${entry.name}</td>
+        <td>${formatTime(entry.timeTaken)}</td>
+        <td>${new Date(entry.startTime).toLocaleTimeString()}</td>
+        <td>${new Date(entry.endTime).toLocaleTimeString()}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  updateLeaderboardUI();
+</script>
+
+</body>
+</html>
