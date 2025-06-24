@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>🎉 Office Escape Login</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #fffde7, #e1f5fe);
+      text-align: center;
+      color: #333;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    input {
+      padding: 0.8rem 1rem;
+      width: 250px;
+      border: 2px solid #f48fb1;
+      border-radius: 12px;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    button {
+      margin-left: 10px;
+      padding: 0.8rem 1.2rem;
+      font-size: 1rem;
+      border: none;
+      background: #ffb74d;
+      color: #fff;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      background: #ffa726;
+      transform: scale(1.05);
+    }
+
+    .welcome {
+      font-size: 1.3rem;
+      margin: 20px 0;
+      display: none;
+    }
+
+    .puzzles {
+      display: none;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .puzzle {
+      width: 150px;
+      height: 150px;
+      background: #ffffff;
+      border: 3px dashed #f06292;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: not-allowed;
+      transition: 0.3s;
+      position: relative;
+      opacity: 0.4;
+    }
+
+    .puzzle span {
+      font-size: 2rem;
+    }
+
+    .puzzle.unlocked {
+      cursor: pointer;
+      opacity: 1;
+      background: #ffe0b2;
+      animation: pulse 1.2s infinite;
+    }
+
+    .puzzle:hover.unlocked {
+      transform: scale(1.05) rotate(-2deg);
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 138, 101, 0.6); }
+      70% { box-shadow: 0 0 0 12px rgba(255, 138, 101, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 138, 101, 0); }
+    }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff8e1;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.25);
+      z-index: 999;
+      display: none;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .popup button {
+      margin-top: 1rem;
+      padding: 0.6rem 1.5rem;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>💼 Office Escape Login</h1>
+  <p>Only 15 team members can play at once – are you in? 😎</p>
+
+  <input type="text" id="username" placeholder="Enter your name..." />
+  <button onclick="start()">Let's Go 🚀</button>
+
+  <div class="welcome" id="welcomeMsg"></div>
+
+  <div class="puzzles" id="puzzleGrid">
+    <div class="puzzle" id="puzzle1" onclick="tryOpenPuzzle(1)"><span>🧩</span><br>Puzzle 1</div>
+    <div class="puzzle" id="puzzle2" onclick="tryOpenPuzzle(2)"><span>🕵️</span><br>Puzzle 2</div>
+    <div class="puzzle" id="puzzle3" onclick="tryOpenPuzzle(3)"><span>💼</span><br>Puzzle 3</div>
+    <div class="puzzle" id="puzzle4" onclick="tryOpenPuzzle(4)"><span>🧾</span><br>Puzzle 4</div>
+    <div class="puzzle" id="puzzle5" onclick="tryOpenPuzzle(5)"><span>📊</span><br>Puzzle 5</div>
+    <div class="puzzle" id="puzzle6" onclick="tryOpenPuzzle(6)"><span>🔐</span><br>Puzzle 6</div>
+  </div>
+
+  <!-- Pop-up -->
+  <div class="popup" id="popup">
+    <h2 id="popupTitle">Puzzle Title</h2>
+    <p>This is a goofy sample puzzle. Replace this with your real one! 🎲</p>
+    <button onclick="completePuzzle()">Mark Complete ✅</button>
+  </div>
+
+  <!-- Beep Sound -->
+  <audio id="tapSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_9ec03ce6e5.mp3" preload="auto"></audio>
+
+  <script>
+    const MAX_PLAYERS = 15;
+    let currentPuzzle = 0;
+    let activeUser = "";
+
+    function start() {
+      const name = document.getElementById("username").value.trim();
+      if (!name) return alert("Please enter your name 😅");
+
+      const players = JSON.parse(localStorage.getItem("playersList")) || [];
+
+      if (!players.includes(name) && players.length >= MAX_PLAYERS) {
+        window.location.href = "lobby.html"; // redirect to lobby
+        return;
+      }
+
+      if (!players.includes(name)) {
+        players.push(name);
+        localStorage.setItem("playersList", JSON.stringify(players));
+      }
+
+      activeUser = name;
+      currentPuzzle = parseInt(localStorage.getItem(`${name}_progress`) || 1);
+
+      document.getElementById("welcomeMsg").innerText = `Welcome ${name}! Time to escape 🧠`;
+      document.getElementById("welcomeMsg").style.display = "block";
+      document.getElementById("puzzleGrid").style.display = "flex";
+
+      updatePuzzleLocks();
+      playSound();
+    }
+
+    function updatePuzzleLocks() {
+      for (let i = 1; i <= 6; i++) {
+        const tile = document.getElementById(`puzzle${i}`);
+        tile.classList.remove("unlocked");
+        tile.style.cursor = "not-allowed";
+        tile.style.opacity = 0.4;
+      }
+
+      for (let i = 1; i <= currentPuzzle; i++) {
+        const tile = document.getElementById(`puzzle${i}`);
+        tile.classList.add("unlocked");
+        tile.style.cursor = "pointer";
+        tile.style.opacity = 1;
+      }
+    }
+
+    function tryOpenPuzzle(num) {
+      if (num > currentPuzzle) {
+        alert("🔒 This puzzle is locked. Complete the previous one first!");
+        return;
+      }
+
+      document.getElementById("popupTitle").innerText = `Puzzle ${num} – Let’s Solve!`;
+      document.getElementById("popup").style.display = "block";
+      playSound();
+    }
+
+    function completePuzzle() {
+      document.getElementById("popup").style.display = "none";
+      if (currentPuzzle < 6) currentPuzzle++;
+      localStorage.setItem(`${activeUser}_progress`, currentPuzzle);
+      updatePuzzleLocks();
+      playSound();
+    }
+
+    function playSound() {
+      const beep = document.getElementById("tapSound");
+      beep.currentTime = 0;
+      beep.play();
+    }
+  </script>
+</body>
+</html>
+
